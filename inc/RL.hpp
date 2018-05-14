@@ -5,16 +5,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <float.h>
 #include <random>
 #include <vector>
 #include <ctime>
 #include <iostream>
 
+
 #include "util.hpp"
 
 class QLearner {
     public:
-		QLearner(int numStates, bool *numActionsPerState, float discountFactor, float learningRate, float epsilon, int *startState);
+	QLearner(int numStates, int numActionsPerState, bool *validActionsPerState, int *transitionMatrix, float discountFactor = 0.9f, int startState = -1, float epsilon = 0.2f);
 		~QLearner();
 		int GetNextAction();
 		int GetBestAction(int state);
@@ -25,11 +27,13 @@ class QLearner {
         float m_discountFactor;
 		float m_learningRate;
 		float m_epsilon;
+		float m_epsilonDecay;
 		int m_currentState;
 		int m_numStates;
+		int m_numActionsPerState;
 		int m_currentAction;
-		int m_prevState;
 		bool *m_validActionsPerState;
+		int *m_transitionMatrix;
 		std::default_random_engine *m_gen;
 		std::uniform_real_distribution<float> *m_dis;
 	
